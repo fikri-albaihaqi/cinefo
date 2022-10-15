@@ -24,4 +24,5 @@ export default {
 
 <template>
   <Trending :trending-data="trendingData" />
+  <h1 class="text-6xl">Movies</h1>
 </template>

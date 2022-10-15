@@ -23,9 +23,21 @@ export default {
 
 <template>
   <Transition :name="transitionEffect">
-    <div class="absolute -z-10 top-0 bottom-0 left-0 right-0" v-show="currentSlide === index"
-      @mouseenter="$emit('mouseenter')" @mouseout="$emit('mouseout')">
-      <img :src="imageUrl + trendingItem[index].backdrop_path" alt="">
+    <div class="flex items-end absolute w-screen h-screen -z-10" v-show="currentSlide === index"
+      @mouseenter="$emit('mouseenter')" @mouseout="$emit('mouseout')" :style="{
+        backgroundImage: 'url(' + imageUrl + trendingItem[index].backdrop_path + ')',
+        backgroundSize: 'cover',
+      }">
+      <div class="absolute bg-gradient-to-t from-black w-screen h-1/2"></div>
+      <div class="absolute self-start bg-gradient-to-b from-black w-screen h-1/4"></div>
+      <div class="flex flex-col relative mx-auto mb-16 w-[80vw] z-index-10">
+        <h1 class="font-bold text-4xl">{{ trendingItem[index].title ||
+        trendingItem[index].name }}</h1>
+        <h3 class="mb-4">{{ trendingItem[index].vote_average.toFixed(1) }} Score</h3>
+        <p>
+          {{ trendingItem[index].overview }}
+        </p>
+      </div>
     </div>
   </Transition>
 </template>

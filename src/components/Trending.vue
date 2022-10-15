@@ -14,7 +14,7 @@ export default {
     trendingData: Object,
     interval: {
       type: Number,
-      default: 5000,
+      default: 10000,
     },
   },
   data() {
@@ -28,25 +28,25 @@ export default {
     setCurrentSlide(index) {
       this.currentSlide = index;
     },
-    prev(step = -1) {
+    next(step = -1) {
       const index = this.currentSlide > 0 ? this.currentSlide + step : this.trendingData.length - 1;
       this.setCurrentSlide(index);
       this.direction = 'left';
       this.startSlideTimer();
     },
-    _next(step = 1) {
+    _prev(step = 1) {
       const index = this.currentSlide < this.trendingData.length - 1 ? this.currentSlide + step : 0;
       this.setCurrentSlide(index);
       this.direction = 'right';
     },
-    next(step = 1) {
-      this._next(step);
+    prev(step = 1) {
+      this._prev(step);
       this.startSlideTimer();
     },
     startSlideTimer() {
       this.stopSlideTimer();
       this.slideInterval = setInterval(() => {
-        this._next();
+        this._prev();
       }, this.interval);
     },
     stopSlideTimer() {
@@ -72,11 +72,14 @@ export default {
 
 <template>
   <div class="flex justify-center">
-    <div class="relative w-[100vw] h-[100vh] overflow-hidden">
+    <div class="flex justify-center w-screen h-screen">
       <CarouselIndicators :total="trendingData.length" :current-index="currentSlide" @switch="switchSlide($event)" />
-      <TrendingItem v-for="(item, index) in trendingData" :key="`item-${index}`" :trending-item="trendingData"
-        :index="index" :current-slide="currentSlide" :direction="direction" @mouseenter="stopSlideTimer"
-        @mouseout="startSlideTimer" />
+      <a class="w-screen" href="">
+        <TrendingItem v-for="(item, index) in trendingData" :key="`item-${index}`" :trending-item="trendingData"
+          :index="index" :current-slide="currentSlide" :direction="direction" @mouseenter="stopSlideTimer"
+          @mouseout="startSlideTimer">
+        </TrendingItem>
+      </a>
       <CarouselControls @prev="prev" @next="next" />
     </div>
   </div>
