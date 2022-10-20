@@ -1,86 +1,66 @@
 <script>
-import TrendingItem from './TrendingItem.vue';
-import CarouselControls from './CarouselControls.vue';
-import CarouselIndicators from './CarouselIndicators.vue';
-
 export default {
   name: 'Trending',
-  components: {
-    TrendingItem,
-    CarouselControls,
-    CarouselIndicators,
-  },
   props: {
-    trendingData: Object,
-    interval: {
-      type: Number,
-      default: 10000,
-    },
+    apiData: Object,
+    index: Number,
+    currentSlide: Number,
+    direction: String,
   },
   data() {
     return {
-      currentSlide: 0,
-      slideInterval: null,
-      direction: 'right',
+      imageUrl: 'https://image.tmdb.org/t/p/original',
     }
   },
-  methods: {
-    setCurrentSlide(index) {
-      this.currentSlide = index;
-    },
-    next(step = -1) {
-      const index = this.currentSlide > 0 ? this.currentSlide + step : this.trendingData.length - 1;
-      this.setCurrentSlide(index);
-      this.direction = 'left';
-      this.startSlideTimer();
-    },
-    _prev(step = 1) {
-      const index = this.currentSlide < this.trendingData.length - 1 ? this.currentSlide + step : 0;
-      this.setCurrentSlide(index);
-      this.direction = 'right';
-    },
-    prev(step = 1) {
-      this._prev(step);
-      this.startSlideTimer();
-    },
-    startSlideTimer() {
-      this.stopSlideTimer();
-      this.slideInterval = setInterval(() => {
-        this._prev();
-      }, this.interval);
-    },
-    stopSlideTimer() {
-      clearInterval(this.slideInterval);
-    },
-    switchSlide(index) {
-      const step = index - this.currentSlide;
-      if (step > 0) {
-        this.next(step);
-      } else {
-        this.prev(step);
-      }
+  computed: {
+    transitionEffect() {
+      return this.direction === 'right' ? 'slide-out' : 'slide-in';
     }
-  },
-  mounted() {
-    this.startSlideTimer();
-  },
-  beforeUnmount() {
-    this.stopSlideTimer();
   }
 }
 </script>
 
 <template>
-  <div class="flex justify-center">
-    <div class="flex justify-center w-screen h-screen">
-      <CarouselIndicators :total="trendingData.length" :current-index="currentSlide" @switch="switchSlide($event)" />
-      <a class="w-screen" href="">
-        <TrendingItem v-for="(item, index) in trendingData" :key="`item-${index}`" :trending-item="trendingData"
-          :index="index" :current-slide="currentSlide" :direction="direction" @mouseenter="stopSlideTimer"
-          @mouseout="startSlideTimer">
-        </TrendingItem>
-      </a>
-      <CarouselControls @prev="prev" @next="next" />
+  <Transition :name="transitionEffect">
+    <div class="flex items-end absolute w-screen h-screen -z-10" v-show="currentSlide === index" :style="{
+      backgroundImage: 'url(' + imageUrl + apiData[index].backdrop_path + ')',
+      backgroundSize: 'cover',
+    }">
+      <div class="absolute bg-gradient-to-t from-background w-screen h-1/2"></div>
+      <div class="absolute self-start bg-gradient-to-b from-background w-screen h-1/4"></div>
+      <div class="flex flex-col relative mx-auto mb-16 w-[80vw] z-index-10">
+        <h1 class="font-bold text-4xl">{{ apiData[index].title ||
+        apiData[index].name }}</h1>
+        <h3 class="mb-4">{{ apiData[index].vote_average.toFixed(1) }} Score</h3>
+        <p>
+          {{ apiData[index].overview }}
+        </p>
+      </div>
     </div>
-  </div>
+  </Transition>
 </template>
+
+<style scoped>
+.slide-in-enter-active,
+.slide-in-leave-active,
+.slide-out-enter-active,
+.slide-out-leave-active {
+  transition: all 1s ease-in-out;
+}
+
+.slide-in-enter-from {
+  transform: translateX(-100%);
+}
+
+.slide-in-leave-to {
+  transform: translateX(100%);
+}
+
+.slide-out-enter-from {
+  transform: translateX(100%);
+}
+
+.slide-out-leave-to {
+  transform: translateX(-100%);
+}
+</style>

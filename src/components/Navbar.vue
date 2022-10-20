@@ -6,7 +6,7 @@ export default {
 
 <template>
   <nav class="m-auto w-[80vw]">
-    <div class="flex justify-between fixed w-[80%] items-center text-white p-8">
+    <div class="flex justify-between absolute w-[80%] items-center text-white p-8">
       <a href="" class="font-lexend-exa font-bold text-2xl"><span class="text-primary">C</span>inefo</a>
       <input @keyup.enter="" class="
             mx-2
@@ -17,7 +17,7 @@ export default {
             placeholder:text-white/60 placeholder:italic
             w-[80vh]
           " type="text" placeholder="Search movies, TV shows, actors, more..." />
-      <div class="font-lexend">
+      <div>
         <a class="p-4 hover:text-primary" href="">Movies</a>
         <a class="p-4 hover:text-primary" href="">TV Shows</a>
         <a class="p-4 hover:text-primary" href="">People</a>
