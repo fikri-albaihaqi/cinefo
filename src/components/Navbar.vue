@@ -7,7 +7,7 @@ export default {
 <template>
   <nav class="m-auto w-[80vw]">
     <div class="flex justify-between absolute w-[80%] items-center text-white p-8">
-      <a href="" class="font-lexend-exa font-bold text-2xl"><span class="text-primary">C</span>inefo</a>
+      <router-link to="/" class="font-lexend-exa font-bold text-2xl"><span class="text-primary">C</span>inefo</router-link>
       <input @keyup.enter="" class="
             mx-2
             p-2

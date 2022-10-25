@@ -4,7 +4,7 @@ import CarouselControls from './CarouselControls.vue';
 import CarouselIndicators from './CarouselIndicators.vue';
 
 export default {
-  name: 'ImageSlider',
+  name: 'Carousel',
   components: {
     Trending,
     CarouselControls,
@@ -78,11 +78,11 @@ export default {
   <div class="flex justify-center">
     <div class="flex justify-center" :class="height">
       <CarouselIndicators :total="apiData.length" :current-index="currentSlide" @switch="switchSlide($event)" />
-      <a :class="itemWidth" href="">
+      <router-link :to="{ name: apiData[currentSlide].media_type === 'movie' ? 'movie-detail' : 'tv-detail', params: { id: apiData[currentSlide].id } }" :class="itemWidth">
         <component :is="compo" v-for="(item, index) in apiData" :key="`item-${index}`" :api-data="apiData"
           :index="index" :current-slide="currentSlide" :direction="direction">
         </component>
-      </a>
+      </router-link>
       <CarouselControls :top="'top-[50%]'" @prev="prev" @next="next" />
     </div>
   </div>

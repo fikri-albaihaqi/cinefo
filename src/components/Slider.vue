@@ -1,12 +1,14 @@
 <script>
 import CardItem from './CardlItem.vue';
+import ImageItem from './ImageItem.vue';
 import CarouselControls from './CarouselControls.vue';
 import CarouselIndicators from './CarouselIndicators.vue';
 
 export default {
-  name: 'ImageSlider',
+  name: 'Slider',
   components: {
     CardItem,
+    ImageItem,
     CarouselControls,
     CarouselIndicators,
   },
@@ -16,6 +18,11 @@ export default {
     width: String,
     height: String,
     itemWidth: String,
+    mediaType: String,
+    upcoming: {
+      type: Boolean,
+      default: false,
+    }
   },
   data() {
     return {
@@ -31,8 +38,7 @@ export default {
       if (this.offset !== 0) {
         this.offset += this.sliderWidth + this.cardMarginRight;
         this.animation = `translateX(${this.offset}px)`
-        console.log(this.offset);
-        // this.$refs.card.style.transform = `translateX(${this.offset}px)`;
+        // console.log(this.offset);
       }
     },
     next() {
@@ -42,29 +48,25 @@ export default {
       if (this.offset !== maxX) {
         this.offset -= this.sliderWidth + this.cardMarginRight;
         this.animation = `translateX(${this.offset}px)`
-        console.log(maxX);
-        console.log(this.offset);
-        // this.$refs.card.style.transform = `translateX(${this.offset}px)`;
+        // console.log(maxX);
+        // console.log(this.offset);
       }
     },
     assignCardElement(n) {
       this.cardElement = n;
       this.cardMarginRight = Number(this.cardElement.marginRight.match(/\d+/g)[0]);
-      // console.log(this.cardElement.marginRight.match(/\d+/g)[0]);
-      // console.log(this.cardMarginRight);
     }
   },
   mounted() {
     this.sliderWidth = this.$refs.slider.clientWidth;
-    console.log(this.sliderWidth);
   }
 }
 </script>
 
 <template>
   <div ref="slider" class="flex relative w-full overflow-hidden border-white mt-8">
-    <component ref="card" @card-element-sent="assignCardElement" :styling="animation" :is="compo"
-      v-for="(item, index) in apiData" :key="`item-${index}`" :api-data="apiData" :index="index" />
+    <component ref="card" @card-element-sent="assignCardElement" :upcoming="upcoming" :styling="animation" :is="compo"
+      v-for="(item, index) in apiData" :key="`item-${index}`" :api-data="apiData" :index="index" :mediaType="mediaType" />
     <CarouselControls :top="'top-[35%]'" @prev="prev" @next="next" />
   </div>
 </template>
