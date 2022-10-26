@@ -28,7 +28,7 @@ export default {
     async getImagesData(id) {
       return (await getMovieImages(id)).data.backdrops;
     },
-    getDirector(){
+    getDirector() {
       const crew = this.creditsData.crew;
       const director = crew.filter(crew => crew.job === 'Director');
       return director[0].name;
@@ -58,12 +58,16 @@ export default {
       <h3>Original title: {{ movieData.original_title }}</h3>
 
       <h3 class="font-bold mt-4">{{ movieData.runtime }} minutes • {{ movieData.release_date.slice(0, 4) }} • {{
-      movieData.vote_average.toFixed(1) }} Score</h3>
+          movieData.vote_average.toFixed(1)
+      }} Score</h3>
 
       <p class="mt-4">{{ movieData.overview }}</p>
       <Button :text="'Watch Trailer'" :class="['bg-primary', 'py-3', 'px-8', 'rounded-full', 'mt-8']" />
       <h3 class="font-bold mt-8">{{ getDirector() }}</h3>
       <h3>Director</h3>
+      <div class="flex mt-8">
+        <h3 class="text-xs mr-2 bg-slate-500 px-4 py-2 rounded-full" v-for="(i, n) in movieData.genres">{{ movieData.genres[n].name }}</h3>
+      </div>
     </div>
     <div class="pt-[40vh] ml-12">
       <h1 class="text-2xl font-bold">Top Cast</h1>
@@ -84,7 +88,7 @@ export default {
       </div>
     </div>
   </div>
-  <div class="w-[80vw] m-auto">
+  <div class="w-[80vw] m-auto mt-16">
     <h1 class="text-2xl font-bold">Backdrops</h1>
     <Slider :compo="'ImageItem'" :api-data="imagesData" :width="'w-[80vw]'" />
   </div>

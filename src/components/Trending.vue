@@ -33,7 +33,7 @@ export default {
       <div class="absolute bg-gradient-to-t from-background w-screen h-1/2"></div>
       <div class="absolute top-0 w-screen h-[15%]" :style="{
         backgroundColor: '#1B1A17',
-        maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0))',
+        maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0))',
       }"></div>
       <div class="flex flex-col relative mx-auto mb-16 w-[80vw] z-index-10">
         <h1 class="font-bold text-4xl">{{ apiData[index].title ||

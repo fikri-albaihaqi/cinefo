@@ -52,9 +52,13 @@ export default {
       <h1 class="text-3xl font-bold">{{ tvData.name }}</h1>
       <h3>Original title: {{ tvData.original_name }}</h3>
 
-      <h3 class="font-bold mt-4">{{ tvData.episode_run_time[0] || tvData.last_episode_to_air.runtime }} minutes • {{ tvData.first_air_date.slice(0, 4) }} • {{
-          tvData.vote_average.toFixed(1)
-      }} Score</h3>
+      <h3 class="font-bold mt-4">{{ tvData.episode_run_time[0] || tvData.last_episode_to_air.runtime }} minutes • {{
+          tvData.first_air_date.slice(0, 4)
+      }} - {{ tvData.last_air_date.slice(0, 4) }} • {{ tvData.number_of_seasons }} {{ tvData.number_of_seasons > 1 ?
+    'seasons' : 'season'
+}} • {{ tvData.number_of_episodes }} {{ tvData.number_of_episodes > 1 ? 'episodes' : 'episode' }} • {{
+    tvData.vote_average.toFixed(1)
+}} Score</h3>
 
       <p class="mt-4">{{ tvData.overview }}</p>
       <Button :text="'Watch Trailer'" :class="['bg-primary', 'py-3', 'px-8', 'rounded-full', 'mt-8']" />
@@ -64,8 +68,13 @@ export default {
           <h3>Creator</h3>
         </div>
       </div>
+      <div class="flex mt-8">
+        <h3 class="text-xs mr-2 bg-slate-500 px-4 py-2 rounded-full" v-for="(i, n) in tvData.genres">{{
+            tvData.genres[n].name
+        }}</h3>
+      </div>
     </div>
-    <div class="pt-[40vh] ml-12">
+    <div class="pt-[40vh] ml-12" v-if="creditsData.hasOwnProperty('cast')">
       <h1 class="text-2xl font-bold">Top Cast</h1>
       <div>
         <div class="flex items-center my-4" v-for="(n, i) in 4">
@@ -84,7 +93,7 @@ export default {
       </div>
     </div>
   </div>
-  <div class="w-[80vw] m-auto">
+  <div class="w-[80vw] m-auto mt-16">
     <h1 class="text-2xl font-bold">Backdrops</h1>
     <Slider :compo="'ImageItem'" :api-data="imagesData" :width="'w-[80vw]'" />
   </div>
