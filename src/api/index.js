@@ -22,3 +22,7 @@ export const getTvDetail = (id) => axios.get(`${url}/tv/${id}?api_key=${apiKey}`
 export const getTvCredits = (id) => axios.get(`${url}/tv/${id}/credits?api_key=${apiKey}`);
 
 export const getTvImages = (id) => axios.get(`${url}/tv/${id}/images?api_key=${apiKey}`);
+
+export const getPersonDetail = (id) => axios.get(`${url}/person/${id}?api_key=${apiKey}`);
+
+export const getPersonCombinedCredits = (id) => axios.get(`${url}/person/${id}/combined_credits?api_key=${apiKey}`);

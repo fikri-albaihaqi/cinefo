@@ -72,7 +72,7 @@ export default {
     <div class="pt-[40vh] ml-12">
       <h1 class="text-2xl font-bold">Top Cast</h1>
       <div>
-        <div class="flex items-center my-4" v-for="(n, i) in 4">
+        <router-link :to="{ name: 'person-detail', params: { id: creditsData.cast[i].id } }" class="flex items-center my-4" v-for="(n, i) in 4">
           <div class="w-[80px] h-[80px] rounded-full" :style="{
             backgroundImage: 'url(' + imageUrl + creditsData.cast[i].profile_path + ')',
             backgroundSize: 'cover',
@@ -83,7 +83,7 @@ export default {
             <h3 class="font-bold">{{ creditsData.cast[i].name }}</h3>
             <h3>as {{ creditsData.cast[i].character }}</h3>
           </div>
-        </div>
+        </router-link>
         <a href="" class="text-primary font-bold">View all</a>
       </div>
     </div>
