@@ -1,5 +1,5 @@
 <script>
-import { getTrending, getPopularMovies, getPopularTVShows, getUpcomingMovies } from "../api/index.js";
+import { getTrending, getPopularMovies, getPopularTvShows, getUpcomingMovies } from "../api/index.js";
 import Carousel from "../components/Carousel.vue";
 import Slider from '../components/Slider.vue';
 export default {
@@ -12,7 +12,7 @@ export default {
     return {
       trendingData: Object,
       popularMoviesData: Object,
-      popularTVShowsData: Object,
+      popularTvShowsData: Object,
       upcomingMoviesData: Object,
     }
   },
@@ -23,8 +23,8 @@ export default {
     async getPopularMoviesData() {
       return (await getPopularMovies()).data.results;
     },
-    async getPupolarTVShowsData() {
-      return (await getPopularTVShows()).data.results;
+    async getPupolarTvShowsData() {
+      return (await getPopularTvShows()).data.results;
     },
     async getUpcomingMoviesData() {
       return (await getUpcomingMovies()).data.results;
@@ -33,7 +33,7 @@ export default {
   async created() {
     this.trendingData = await this.getTrendingData();
     this.popularMoviesData = await this.getPopularMoviesData();
-    this.popularTVShowsData = await this.getPupolarTVShowsData();
+    this.popularTvShowsData = await this.getPupolarTvShowsData();
     this.upcomingMoviesData = await this.getUpcomingMoviesData();
   }
 }
@@ -43,12 +43,12 @@ export default {
   <Carousel :compo="'Trending'" :apiData="trendingData" :width="'w-screen'" :itemWidth="'w-screen'" :height="'h-screen'" />
   <div class="w-[80vw] m-auto mt-16">
     <h1 class="text-3xl font-bold text-primary">Popular Movies</h1>
-    <Slider :compo="'CardItem'" :apiData="popularMoviesData" :width="'w-[80vw]'" :media-type="'movie'" />
+    <Slider :compo="'CardItem'" :apiData="popularMoviesData" :media-type="'movie'" :margin="'mr-[3.58rem]'" />
 
     <h1 class="text-3xl font-bold text-primary mt-16">Upcoming Movies</h1>
-    <Slider :compo="'CardItem'" :apiData="upcomingMoviesData" :width="'w-[80vw]'" :upcoming="true" :media-type="'movie'" />
+    <Slider :compo="'CardItem'" :apiData="upcomingMoviesData" :upcoming="true" :media-type="'movie'" :margin="'mr-[3.58rem]'" />
 
     <h1 class="text-3xl font-bold text-primary mt-16">Popular TV Shows</h1>
-    <Slider :compo="'CardItem'" :apiData="popularTVShowsData" :width="'w-[80vw]'" :media-type="'tv'" />
+    <Slider :compo="'CardItem'" :apiData="popularTvShowsData" :media-type="'tv'" :margin="'mr-[3.58rem]'" />
   </div>
 </template>

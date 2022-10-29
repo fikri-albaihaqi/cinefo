@@ -3,7 +3,7 @@ import { getPersonDetail, getPersonCombinedCredits } from '../api/index.js';
 import Slider from '../components/Slider.vue';
 
 export default {
-  name: 'PersonDetail',
+  name: 'PersonDetailView',
   components: {
     Slider,
   },
@@ -51,23 +51,23 @@ export default {
         <img class="w-[200px] rounded-md" :src="imageUrl + personData.profile_path" alt="">
         <h2 class="font-bold text-xl mt-8">Personal Info</h2>
 
-        <h3 class="font-bold mt-4">Known For</h3>
-        <p>{{ personData.known_for_department }}</p>
+        <h3 class="mt-4">Known For</h3>
+        <p class="text-gray-400">{{ personData.known_for_department }}</p>
 
-        <h3 class="font-bold mt-4">Gender</h3>
-        <p>{{ personData.gender === 1 ? 'Female' : 'Male' }}</p>
+        <h3 class="mt-4">Gender</h3>
+        <p class="text-gray-400">{{ personData.gender === 1 ? 'Female' : 'Male' }}</p>
 
-        <h3 class="font-bold mt-4">Birthday</h3>
-        <p>{{ changeDateFormat() }}</p>
+        <h3 class="mt-4">Birthday</h3>
+        <p class="text-gray-400">{{ changeDateFormat() }}</p>
 
-        <h3 class="font-bold mt-4">Place of Birth</h3>
-        <p>{{ personData.place_of_birth }}</p>
+        <h3 class="mt-4">Place of Birth</h3>
+        <p class="text-gray-400">{{ personData.place_of_birth }}</p>
       </div>
       <div class="min-w-[80%] ml-8">
         <h1 class="font-bold text-3xl">{{ personData.name }}</h1>
         <p class="biography mt-8">{{ personData.biography }}</p>
         <h2 class="font-bold text-xl mt-8">Known For</h2>
-        <Slider :api-data="getKnownForActing()" :compo="'CardItem'"  />
+        <Slider :api-data="getKnownForActing()" :compo="'CardItem'" :margin="'mr-12'"  />
       </div>
     </div>
   </div>

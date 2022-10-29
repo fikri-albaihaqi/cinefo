@@ -1,5 +1,5 @@
 <script>
-import CardItem from './CardlItem.vue';
+import CardItem from './CardItem.vue';
 import ImageItem from './ImageItem.vue';
 import CarouselControls from './CarouselControls.vue';
 import CarouselIndicators from './CarouselIndicators.vue';
@@ -15,10 +15,8 @@ export default {
   props: {
     apiData: Object,
     compo: String,
-    width: String,
-    height: String,
-    itemWidth: String,
     mediaType: String,
+    margin: String,
     upcoming: {
       type: Boolean,
       default: false,
@@ -66,7 +64,8 @@ export default {
 <template>
   <div ref="slider" class="flex relative w-full overflow-hidden border-white mt-8">
     <component ref="card" @card-element-sent="assignCardElement" :upcoming="upcoming" :styling="animation" :is="compo"
-      v-for="(item, index) in apiData" :key="`item-${index}`" :api-data="apiData" :index="index" :mediaType="mediaType" />
+      v-for="(item, index) in apiData" :key="`item-${index}`" :api-data="apiData" :index="index" :mediaType="mediaType"
+      :margin="margin" />
     <CarouselControls :top="'top-[35%]'" @prev="prev" @next="next" />
   </div>
 </template>

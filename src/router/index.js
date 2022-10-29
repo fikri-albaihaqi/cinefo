@@ -1,8 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import MovieDetail from '../views/MovieDetail.vue'
-import TvDetail from '../views/TvDetail.vue'
-import PersonDetail from '../views/PersonDetail.vue'
+import MovieDetailView from '../views/MovieDetailView.vue'
+import TvDetailView from '../views/TvDetailView.vue'
+import PersonDetailView from '../views/PersonDetailView.vue'
+import MoviesView from '../views/MoviesView.vue'
+import TvShowsView from '../views/TvShowsView.vue'
+import PeopleView from '../views/PeopleView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,17 +18,32 @@ const router = createRouter({
     {
       path: '/movie/:id',
       name: 'movie-detail',
-      component: MovieDetail
+      component: MovieDetailView
     },
     {
       path: '/tv/:id',
       name: 'tv-detail',
-      component: TvDetail
+      component: TvDetailView
     },
     {
       path: '/person/:id',
       name: 'person-detail',
-      component: PersonDetail
+      component: PersonDetailView
+    },
+    {
+      path: '/movies/:type',
+      name: 'movies',
+      component: MoviesView
+    },
+    {
+      path: '/tvs/:type',
+      name: 'tvs',
+      component: TvShowsView
+    },
+    {
+      path: '/people',
+      name: 'people',
+      component: PeopleView
     }
   ]
 })
