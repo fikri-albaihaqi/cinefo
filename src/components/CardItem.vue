@@ -31,7 +31,7 @@ export default {
         return 'movie-detail';
       } else if (this.mediaType === 'tv') {
         return 'tv-detail';
-      } else if (this.mediaType === 'people') {
+      } else if (this.mediaType === 'person') {
         return 'person-detail';
       }
     },
@@ -44,7 +44,7 @@ export default {
       }
     },
     getProfilePath() {
-      if (this.mediaType === 'people') {
+      if (this.mediaType === 'person') {
         if (this.apiData[this.index].profile_path === null) {
           return '../src/assets/blank-image.png';
         }
@@ -55,7 +55,9 @@ export default {
   mounted() {
     this.cardElement = window.getComputedStyle(this.$refs.card);
     this.$emit('card-element-sent', this.cardElement);
-    this.score = this.apiData[this.index].vote_average + ' Score';
+    if (this.mediaType !== 'person') {
+      this.score = this.apiData[this.index].vote_average.toFixed(1) + ' Score';
+    }
   }
 }
 </script>
@@ -64,7 +66,7 @@ export default {
   <div ref="card" class="card w-[200px]" :class="margin" :style="{ transform: styling }">
     <router-link :to="{ name: getRouteName(), params: { id: apiData[index].id } }">
       <img class="min-w-[200px] h-[300px] rounded-lg"
-        :src="mediaType === 'people' ? getProfilePath() : getPosterPath()"
+        :src="mediaType === 'person' ? getProfilePath() : getPosterPath()"
         alt="">
       <div class="mt-2">
         <h1 class="">{{ apiData[index].title ||

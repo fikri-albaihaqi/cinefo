@@ -35,3 +35,6 @@ export const getPopularPeople = () => axios.get(`${url}/person/popular?api_key=$
 export const getPersonDetail = (id) => axios.get(`${url}/person/${id}?api_key=${apiKey}`);
 
 export const getPersonCombinedCredits = (id) => axios.get(`${url}/person/${id}/combined_credits?api_key=${apiKey}`);
+
+// Search
+export const multiSearch = (query) => axios.get(`${url}/search/multi?api_key=${apiKey}&query=${query}`);

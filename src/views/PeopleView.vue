@@ -28,7 +28,7 @@ export default {
     <h1 class="font-bold text-2xl ml-12">Popular</h1>
     <div class="flex flex-wrap justify-center mt-8">
       <CardItem :api-data="peopleData" v-for="(item, index) in peopleData" :key="`item-${index}`"
-        :index="index" :media-type="'people'" :margin="'mx-4 my-8'" :hide="'hidden'" />
+        :index="index" :media-type="'person'" :margin="'mx-4 my-8'" :hide="'hidden'" />
     </div>
   </div>
 </template>

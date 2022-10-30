@@ -1,6 +1,13 @@
 <script>
+import router from '../router';
+
 export default {
   name: 'Navbar',
+  methods: {
+    search(queryData) {
+      router.push({ name: 'search', params: { query: queryData } });
+    }
+  }
 }
 </script>
 
@@ -9,7 +16,7 @@ export default {
     <div class="flex justify-between absolute w-[80%] items-center text-white p-8">
       <router-link to="/" class="font-lexend-exa font-bold text-2xl"><span class="text-primary">C</span>inefo
       </router-link>
-      <input @keyup.enter="" class="
+      <input v-model="queryData" @keyup.enter="search(queryData)" class="
             mx-2
             p-2
             rounded-lg
@@ -34,9 +41,11 @@ export default {
           TV Shows
           <div class="dropdown-content hidden absolute bg-primary w-[160px] mt-2 rounded-md text-white">
             <router-link router-link :to="{ name: 'tvs', params: { type: 'popular' } }"
-              class="block text-left p-2 hover:bg-white hover:text-primary hover:rounded-t-md" href="">Popular</router-link>
-              <router-link router-link :to="{ name: 'tvs', params: { type: 'top rated' } }"
-                class="block text-left p-2 hover:bg-white hover:text-primary hover:rounded-b-md" href="">Top Rated</router-link>
+              class="block text-left p-2 hover:bg-white hover:text-primary hover:rounded-t-md" href="">Popular
+            </router-link>
+            <router-link router-link :to="{ name: 'tvs', params: { type: 'top rated' } }"
+              class="block text-left p-2 hover:bg-white hover:text-primary hover:rounded-b-md" href="">Top Rated
+            </router-link>
           </div>
         </li>
         <router-link :to="{ name: 'people' }" class="p-4 hover:text-primary" href="">People</router-link>
