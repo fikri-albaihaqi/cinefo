@@ -1,5 +1,5 @@
 <script>
-import { getMovieDetail, getMovieCredits, getMovieImages } from "../api/index.js";
+import { getMovieDetail, getMovieCredits, getMovieImages, getMovieVideos } from "../api/index.js";
 import Button from '../components/Button.vue';
 import Slider from '../components/Slider.vue';
 
@@ -15,7 +15,12 @@ export default {
       movieData: Object,
       creditsData: Object,
       imagesData: Object,
+      trailerData: Object,
       imageUrl: 'https://image.tmdb.org/t/p/original',
+      videoVisibility: 'hidden',
+      imageVisibility: 'hidden',
+      youtubeUrl: 'https://www.youtube.com/embed/',
+      selectedImage: '',
     }
   },
   methods: {
@@ -28,16 +33,32 @@ export default {
     async getImagesData(id) {
       return (await getMovieImages(id)).data.backdrops;
     },
+    async getTrailerData(id) {
+      const videos = (await getMovieVideos(id)).data.results;
+      const trailer = videos.filter(video => (video.name.includes('Trailer')) && (video.type === 'Trailer'));
+      return trailer[0];
+    },
     getDirector() {
       const crew = this.creditsData.crew;
       const director = crew.filter(crew => crew.job === 'Director');
       return director[0].name;
     },
+    stopVideo() {
+      const iframe = this.$refs.video;
+      const temp = iframe.src;
+      iframe.src = temp;
+      this.videoVisibility = 'hidden';
+    },
+    showImage(n) {
+      this.imageVisibility = '';
+      this.selectedImage = n;
+    }
   },
   async created() {
     this.movieData = await this.getMovieDetailData(this.id);
     this.creditsData = await this.getCreditsData(this.id);
     this.imagesData = await this.getImagesData(this.id);
+    this.trailerData = await this.getTrailerData(this.id);
   },
 }
 </script>
@@ -52,44 +73,68 @@ export default {
     backgroundColor: '#1B1A17',
     maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0))',
   }"></div>
-  <div class="flex w-[80vw] m-auto -z-10">
-    <div class="pt-[40vh] w-[75%]">
-      <h1 class="text-3xl font-bold">{{ movieData.title }}</h1>
-      <h3>Original title: {{ movieData.original_title }}</h3>
-
-      <h3 class="font-bold mt-4">{{ movieData.runtime }} minutes • {{ movieData.release_date.slice(0, 4) }} • {{
-          movieData.vote_average.toFixed(1)
-      }} Score</h3>
-
-      <p class="mt-4">{{ movieData.overview }}</p>
-      <Button :text="'Watch Trailer'" :class="['bg-primary', 'py-3', 'px-8', 'rounded-full', 'mt-8']" />
-      <h3 class="font-bold mt-8">{{ getDirector() }}</h3>
-      <h3>Director</h3>
-      <div class="flex mt-8">
-        <h3 class="text-xs mr-2 bg-slate-500 px-4 py-2 rounded-full" v-for="(i, n) in movieData.genres">{{ movieData.genres[n].name }}</h3>
-      </div>
-    </div>
-    <div class="pt-[40vh] ml-12">
-      <h1 class="text-2xl font-bold">Top Cast</h1>
-      <div>
-        <router-link :to="{ name: 'person-detail', params: { id: creditsData.cast[i].id } }" class="flex items-center my-4" v-for="(n, i) in 4">
-          <div class="w-[80px] h-[80px] rounded-full" :style="{
-            backgroundImage: 'url(' + imageUrl + creditsData.cast[i].profile_path + ')',
-            backgroundSize: 'cover',
-            backgroundPosition: '0px 35%'
-          }">
-          </div>
-          <div class="ml-4">
-            <h3 class="font-bold">{{ creditsData.cast[i].name }}</h3>
-            <h3>as {{ creditsData.cast[i].character }}</h3>
-          </div>
-        </router-link>
-        <a href="" class="text-primary font-bold">View all</a>
-      </div>
+  <div class="fixed w-screen h-screen z-50" :class="videoVisibility" :style="{ backgroundColor: 'rgba(0,0,0,0.8)' }">
+    <span class="absolute material-symbols-outlined text-5xl right-10 top-4 cursor-pointer" @click="stopVideo()">
+      close
+    </span>
+    <div class="w-[80vw] h-full m-auto flex items-center">
+      <iframe ref="video" class="w-full h-[90%]" :src="youtubeUrl + trailerData.key">
+      </iframe>
     </div>
   </div>
-  <div class="w-[80vw] m-auto mt-16">
-    <h1 class="text-2xl font-bold">Backdrops</h1>
-    <Slider :compo="'ImageItem'" :api-data="imagesData" :width="'w-[80vw]'" />
+  <div class="fixed w-screen h-screen z-50" :class="imageVisibility" :style="{ backgroundColor: 'rgba(0,0,0,0.8)' }">
+    <span class="absolute material-symbols-outlined text-5xl right-10 top-4 cursor-pointer" @click="imageVisibility = 'hidden'">
+      close
+    </span>
+    <div class="w-[80vw] h-full m-auto flex items-center">
+      <img :src="selectedImage" alt="">
+    </div>
+  </div>
+  <div class="flex flex-col w-[80vw] m-auto -z-10">
+    <div class="flex">
+      <div class="pt-[40vh] w-[75%]">
+        <h1 class="text-3xl font-bold">{{ movieData.title }}</h1>
+        <h3>Original title: {{ movieData.original_title }}</h3>
+
+        <h3 class="font-bold mt-4">{{ movieData.runtime }} minutes • {{ movieData.release_date.slice(0, 4) }} • {{
+            movieData.vote_average.toFixed(1)
+        }} Score</h3>
+
+        <p class="mt-4">{{ movieData.overview }}</p>
+        <Button :text="'Watch Trailer'" @click="videoVisibility = ''"
+          :class="['bg-primary', 'py-3', 'px-8', 'rounded-full', 'mt-8']" />
+        <h3 class="font-bold mt-8">{{ getDirector() }}</h3>
+        <h3>Director</h3>
+        <div class="flex mt-8">
+          <h3 class="text-xs mr-2 bg-slate-500 px-4 py-2 rounded-full" v-for="(i, n) in movieData.genres">{{
+              movieData.genres[n].name
+          }}</h3>
+        </div>
+      </div>
+      <div class="pt-[40vh] ml-12">
+        <h1 class="text-2xl font-bold">Top Cast</h1>
+        <div>
+          <router-link :to="{ name: 'person-detail', params: { id: creditsData.cast[i].id } }"
+            class="flex items-center my-4" v-for="(n, i) in 4">
+            <div class="w-[80px] h-[80px] rounded-full" :style="{
+              backgroundImage: 'url(' + imageUrl + creditsData.cast[i].profile_path + ')',
+              backgroundSize: 'cover',
+              backgroundPosition: '0px 35%'
+            }">
+            </div>
+            <div class="ml-4">
+              <h3 class="font-bold">{{ creditsData.cast[i].name }}</h3>
+              <h3>as {{ creditsData.cast[i].character }}</h3>
+            </div>
+          </router-link>
+          <router-link :to="{ name: 'cast', params: { media: 'movie', id: movieData.id } }"
+            class="text-primary font-bold">View all</router-link>
+        </div>
+      </div>
+    </div>
+    <div class="w-[80vw] m-auto mt-16">
+      <h1 class="text-2xl font-bold">Backdrops</h1>
+      <Slider :compo="'ImageItem'" @selected="showImage" :api-data="imagesData" :width="'w-[80vw]'" :media-type="'image'" />
+    </div>
   </div>
 </template>

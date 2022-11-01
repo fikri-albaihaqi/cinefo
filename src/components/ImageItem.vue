@@ -1,7 +1,7 @@
 <script>
 export default {
   name: 'ImageItem',
-  emits: ['card-element-sent'],
+  emits: ['card-element-sent', 'image-selected'],
   props: {
     index: Number,
     apiData: Object,
@@ -22,10 +22,8 @@ export default {
 </script>
 
 <template>
-  <div ref="card" class="card mr-2 rounded-" :style="{ transform: styling }">
-    <router-link :to="{ name: 'movie-detail' }">
-      <img class="min-w-[300px] rounded-xl" :src="imageUrl + apiData[index].file_path" alt="">
-    </router-link>
+  <div ref="card" class="card mr-2" :style="{ transform: styling }">
+    <img class="min-w-[300px] rounded-xl cursor-pointer" @click="$emit('image-selected', imageUrl + apiData[index].file_path)" :src="imageUrl + apiData[index].file_path" alt="">
   </div>
 </template>
 

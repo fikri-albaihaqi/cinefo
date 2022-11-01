@@ -18,6 +18,8 @@ export const getMovieCredits = (id) => axios.get(`${url}/movie/${id}/credits?api
 
 export const getMovieImages = (id) => axios.get(`${url}/movie/${id}/images?api_key=${apiKey}`);
 
+export const getMovieVideos = (id) => axios.get(`${url}/movie/${id}/videos?api_key=${apiKey}`);
+
 // TV Shows
 export const getPopularTvShows = () => axios.get(`${url}/tv/popular?api_key=${apiKey}`);
 
@@ -28,6 +30,8 @@ export const getTvDetail = (id) => axios.get(`${url}/tv/${id}?api_key=${apiKey}`
 export const getTvCredits = (id) => axios.get(`${url}/tv/${id}/credits?api_key=${apiKey}`);
 
 export const getTvImages = (id) => axios.get(`${url}/tv/${id}/images?api_key=${apiKey}`);
+
+export const getTvVideos = (id) => axios.get(`${url}/tv/${id}/videos?api_key=${apiKey}`);
 
 // People
 export const getPopularPeople = () => axios.get(`${url}/person/popular?api_key=${apiKey}`);

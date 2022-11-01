@@ -16,7 +16,7 @@ export default {
       monthNames: ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
       ],
-      knownForActing: [],
+      mediaType: [],
     }
   },
   methods: {
@@ -30,11 +30,11 @@ export default {
       const newDate = new Date(this.personData.birthday);
       return `${newDate.getDate()} ${this.monthNames[newDate.getMonth()]}, ${newDate.getFullYear()}`;
     },
-    getKnownForActing() {
+    getMediaType() {
       for (let i = 0; i < 10; i++) {
-        this.knownForActing[i] = this.combinedCreditsData.cast[i];
+        this.mediaType[i] = this.combinedCreditsData.cast[i].media_type;
       }
-      return this.knownForActing;
+      return this.mediaType;
     }
   },
   async created() {
@@ -67,7 +67,8 @@ export default {
         <h1 class="font-bold text-3xl">{{ personData.name }}</h1>
         <p class="biography mt-8">{{ personData.biography }}</p>
         <h2 class="font-bold text-xl mt-8">Known For</h2>
-        <Slider :api-data="getKnownForActing()" :compo="'CardItem'" :margin="'mr-12'"  />
+        <Slider :api-data="combinedCreditsData.cast"
+          :media-type="getMediaType()" :compo="'CardItem'" :margin="'mr-12'" />
       </div>
     </div>
   </div>

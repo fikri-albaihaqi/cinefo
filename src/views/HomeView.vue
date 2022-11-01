@@ -28,6 +28,19 @@ export default {
     },
     async getUpcomingMoviesData() {
       return (await getUpcomingMovies()).data.results;
+    },
+    getMediaType(data) {
+      let mediaType = [];
+      if (data === 'movie') {
+        for (let i = 0; i < 10; i++) {
+          mediaType[i] = 'movie';
+        }
+      } else if (data === 'tv') {
+        for (let i = 0; i < 10; i++) {
+          mediaType[i] = 'tv';
+        }
+      }
+      return mediaType;
     }
   },
   async created() {
@@ -40,15 +53,18 @@ export default {
 </script>
 
 <template>
-  <Carousel :compo="'Trending'" :apiData="trendingData" :width="'w-screen'" :itemWidth="'w-screen'" :height="'h-screen'" />
+  <Carousel :compo="'Trending'" :apiData="trendingData" :width="'w-screen'" :itemWidth="'w-screen'"
+    :height="'h-screen'" />
   <div class="w-[80vw] m-auto mt-16">
     <h1 class="text-3xl font-bold text-primary">Popular Movies</h1>
-    <Slider :compo="'CardItem'" :apiData="popularMoviesData" :media-type="'movie'" :margin="'mr-[3.58rem]'" />
+    <Slider :compo="'CardItem'" :apiData="popularMoviesData" :media-type="getMediaType('movie')"
+      :margin="'mr-[3.58rem]'" />
 
     <h1 class="text-3xl font-bold text-primary mt-16">Upcoming Movies</h1>
-    <Slider :compo="'CardItem'" :apiData="upcomingMoviesData" :upcoming="true" :media-type="'movie'" :margin="'mr-[3.58rem]'" />
+    <Slider :compo="'CardItem'" :apiData="upcomingMoviesData" :upcoming="true" :media-type="getMediaType('movie')"
+      :margin="'mr-[3.58rem]'" />
 
     <h1 class="text-3xl font-bold text-primary mt-16">Popular TV Shows</h1>
-    <Slider :compo="'CardItem'" :apiData="popularTvShowsData" :media-type="'tv'" :margin="'mr-[3.58rem]'" />
+    <Slider :compo="'CardItem'" :apiData="popularTvShowsData" :media-type="getMediaType('tv')" :margin="'mr-[3.58rem]'" />
   </div>
 </template>

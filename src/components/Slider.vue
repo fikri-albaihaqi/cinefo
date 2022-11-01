@@ -6,6 +6,7 @@ import CarouselIndicators from './CarouselIndicators.vue';
 
 export default {
   name: 'Slider',
+  emits: ['selected'],
   components: {
     CardItem,
     ImageItem,
@@ -29,6 +30,7 @@ export default {
       animation: '',
       cardElement: '',
       cardMarginRight: 0,
+      imageUrl: 'https://image.tmdb.org/t/p/original',
     }
   },
   methods: {
@@ -63,8 +65,8 @@ export default {
 
 <template>
   <div ref="slider" class="flex relative w-full overflow-hidden border-white mt-8">
-    <component ref="card" @card-element-sent="assignCardElement" :upcoming="upcoming" :styling="animation" :is="compo"
-      v-for="(item, index) in apiData" :key="`item-${index}`" :api-data="apiData" :index="index" :mediaType="mediaType"
+    <component ref="card" @image-selected="$emit('selected', imageUrl + apiData[index].file_path)" @card-element-sent="assignCardElement" :upcoming="upcoming" :styling="animation" :is="compo"
+      v-for="(item, index) in apiData" :key="`item-${index}`" :api-data="apiData" :index="index" :mediaType="mediaType[index]"
       :margin="margin" />
     <CarouselControls :top="'top-[35%]'" @prev="prev" @next="next" />
   </div>

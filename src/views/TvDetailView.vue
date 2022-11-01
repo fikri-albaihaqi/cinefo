@@ -1,5 +1,5 @@
 <script>
-import { getTvDetail, getTvCredits, getTvImages } from "../api/index.js";
+import { getTvDetail, getTvCredits, getTvImages, getTvVideos } from "../api/index.js";
 import Button from '../components/Button.vue';
 import Slider from '../components/Slider.vue';
 
@@ -16,6 +16,10 @@ export default {
       creditsData: Object,
       imagesData: Object,
       imageUrl: 'https://image.tmdb.org/t/p/original',
+      videoVisibility: 'hidden',
+      imageVisibility: 'hidden',
+      trailerData: Object,
+      youtubeUrl: 'https://www.youtube.com/embed/',
     }
   },
   methods: {
@@ -28,11 +32,27 @@ export default {
     async getImagesData(id) {
       return (await getTvImages(id)).data.backdrops;
     },
+    async getTrailerData(id) {
+      const videos = (await getTvVideos(id)).data.results;
+      const trailer = videos.filter(video => (video.name.includes('Trailer')) && (video.type === 'Trailer'));
+      return trailer[0];
+    },
+    stopVideo() {
+      const iframe = this.$refs.video;
+      const temp = iframe.src;
+      iframe.src = temp;
+      this.videoVisibility = 'hidden';
+    },
+    showImage(n) {
+      this.imageVisibility = '';
+      this.selectedImage = n;
+    },
   },
   async created() {
     this.tvData = await this.getTvDetailData(this.id);
     this.creditsData = await this.getCreditsData(this.id);
     this.imagesData = await this.getImagesData(this.id);
+    this.trailerData = await this.getTrailerData(this.id);
   },
 }
 </script>
@@ -47,6 +67,23 @@ export default {
     backgroundColor: '#1B1A17',
     maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0))',
   }"></div>
+  <div class="fixed w-screen h-screen z-50" :class="videoVisibility" :style="{ backgroundColor: 'rgba(0,0,0,0.8)' }">
+    <span class="absolute material-symbols-outlined text-5xl right-10 top-4 cursor-pointer" @click="stopVideo()">
+      close
+    </span>
+    <div class="w-[80vw] h-full m-auto flex items-center">
+      <iframe ref="video" class="w-full h-[90%]" :src="youtubeUrl + trailerData.key">
+      </iframe>
+    </div>
+  </div>
+  <div class="fixed w-screen h-screen z-50" :class="imageVisibility" :style="{ backgroundColor: 'rgba(0,0,0,0.8)' }">
+    <span class="absolute material-symbols-outlined text-5xl right-10 top-4 cursor-pointer" @click="imageVisibility = 'hidden'">
+      close
+    </span>
+    <div class="w-[80vw] h-full m-auto flex items-center">
+      <img :src="selectedImage" alt="">
+    </div>
+  </div>
   <div class="flex w-[80vw] m-auto -z-10">
     <div class="pt-[40vh] w-[75%]">
       <h1 class="text-3xl font-bold">{{ tvData.name }}</h1>
@@ -61,7 +98,8 @@ export default {
 }} Score</h3>
 
       <p class="mt-4">{{ tvData.overview }}</p>
-      <Button :text="'Watch Trailer'" :class="['bg-primary', 'py-3', 'px-8', 'rounded-full', 'mt-8']" />
+      <Button :text="'Watch Trailer'" @click="videoVisibility = ''"
+        :class="['bg-primary', 'py-3', 'px-8', 'rounded-full', 'mt-8']" />
       <div class="flex">
         <div class="mr-16" v-for="creator in tvData.created_by">
           <h3 class="font-bold mt-8">{{ creator.name }}</h3>
@@ -77,9 +115,10 @@ export default {
     <div class="pt-[40vh] ml-12" v-if="creditsData.hasOwnProperty('cast')">
       <h1 class="text-2xl font-bold">Top Cast</h1>
       <div>
-        <router-link :to="{ name: 'person-detail', params: { id: creditsData.cast[i].id } }" class="flex items-center my-4" v-for="(n, i) in 4">
+        <router-link :to="{ name: 'person-detail', params: { id: creditsData.cast[i].id } }"
+          class="flex items-center my-4" v-for="(n, i) in 4">
           <div class="w-[80px] h-[80px] rounded-full" :style="{
-            backgroundImage: 'url(' + imageUrl + creditsData.cast[i].profile_path + ')',
+            backgroundImage: creditsData.cast[i].profile_path !== null ? 'url(' + imageUrl + creditsData.cast[i].profile_path + ')' : 'url(../src/assets/avatar.png)',
             backgroundSize: 'cover',
             backgroundPosition: '0px 35%'
           }">
@@ -89,12 +128,13 @@ export default {
             <h3>as {{ creditsData.cast[i].character }}</h3>
           </div>
         </router-link>
-        <a href="" class="text-primary font-bold">View all</a>
+        <router-link :to="{ name: 'cast', params: { media: 'tv', id: tvData.id } }" class="text-primary font-bold">View
+          all</router-link>
       </div>
     </div>
   </div>
   <div class="w-[80vw] m-auto mt-16">
     <h1 class="text-2xl font-bold">Backdrops</h1>
-    <Slider :compo="'ImageItem'" :api-data="imagesData" :width="'w-[80vw]'" />
+    <Slider :compo="'ImageItem'" @selected="showImage" :api-data="imagesData" :width="'w-[80vw]'" :media-type="'image'" />
   </div>
 </template>

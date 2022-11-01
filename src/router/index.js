@@ -7,6 +7,7 @@ import MoviesView from '../views/MoviesView.vue'
 import TvShowsView from '../views/TvShowsView.vue'
 import PeopleView from '../views/PeopleView.vue'
 import SearchResultsView from '../views/SearchResultsView.vue'
+import CastView from '../views/CastView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,6 +51,11 @@ const router = createRouter({
       path: '/search/:query',
       name: 'search',
       component: SearchResultsView
+    },
+    {
+      path: '/:media/:id/cast',
+      name: 'cast',
+      component: CastView
     }
   ]
 })
