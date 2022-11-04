@@ -1,12 +1,12 @@
 <script>
-import Trending from './Trending.vue';
+import CarouselItem from './CarouselItem.vue';
 import CarouselControls from './CarouselControls.vue';
 import CarouselIndicators from './CarouselIndicators.vue';
 
 export default {
   name: 'Carousel',
   components: {
-    Trending,
+    CarouselItem,
     CarouselControls,
     CarouselIndicators,
   },
@@ -17,7 +17,6 @@ export default {
       default: 10000,
     },
     compo: String,
-    width: String,
     height: String,
     itemWidth: String, 
   },
@@ -76,14 +75,14 @@ export default {
 
 <template>
   <div class="flex justify-center">
-    <div class="flex justify-center" :class="height">
+    <div class="flex justify-center h-[50vh] lg:h-screen">
       <CarouselIndicators :total="apiData.length" :current-index="currentSlide" @switch="switchSlide($event)" />
-      <router-link :to="{ name: apiData[currentSlide].media_type === 'movie' ? 'movie-detail' : 'tv-detail', params: { id: apiData[currentSlide].id } }" :class="itemWidth">
+      <router-link class="w-screen" :to="{ name: apiData[currentSlide].media_type === 'movie' ? 'movie-detail' : 'tv-detail', params: { id: apiData[currentSlide].id } }">
         <component :is="compo" v-for="(item, index) in apiData" :key="`item-${index}`" :api-data="apiData"
           :index="index" :current-slide="currentSlide" :direction="direction">
         </component>
       </router-link>
-      <CarouselControls :top="'top-[50%]'" @prev="prev" @next="next" />
+      <CarouselControls :top="'top-[40%]'" @prev="prev" @next="next" />
     </div>
   </div>
 </template>

@@ -13,7 +13,7 @@ module.exports = {
       fontFamily: {
         'lexend': ['Lexend', 'sans-serif'],
         'lexend-exa': ['Lexend Exa', 'sans-serif'],
-      }
+      },
     },
   },
   plugins: [],

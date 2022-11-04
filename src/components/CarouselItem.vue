@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: 'Trending',
+  name: 'CarouselItem',
   emits: ['id-sent'],
   props: {
     apiData: Object,
@@ -26,9 +26,10 @@ export default {
 
 <template>
   <Transition :name="transitionEffect">
-    <div class="flex items-end absolute w-screen h-screen -z-10" v-show="currentSlide === index" :style="{
+    <div class="flex items-end absolute w-screen h-[50%] lg:h-screen -z-10" v-show="currentSlide === index" :style="{
       backgroundImage: 'url(' + imageUrl + apiData[index].backdrop_path + ')',
       backgroundSize: 'cover',
+      backgroundPosition: 'center top',
     }">
       <div class="absolute bg-gradient-to-t from-background w-screen h-1/2"></div>
       <div class="absolute top-0 w-screen h-[15%]" :style="{
@@ -36,11 +37,11 @@ export default {
         maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0))',
       }"></div>
       <div class="flex flex-col relative mx-auto mb-16 w-[80vw] z-index-10">
-        <h1 class="font-bold text-4xl">{{ apiData[index].title ||
+        <h1 class="font-bold text-2xl lg:text-4xl">{{ apiData[index].title ||
             apiData[index].name
         }}</h1>
         <h3 class="mb-4">{{ apiData[index].vote_average.toFixed(1) }} Score</h3>
-        <p>
+        <p class="hidden lg:block">
           {{ apiData[index].overview }}
         </p>
       </div>

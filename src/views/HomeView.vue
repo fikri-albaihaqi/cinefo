@@ -53,7 +53,7 @@ export default {
 </script>
 
 <template>
-  <Carousel :compo="'Trending'" :apiData="trendingData" :width="'w-screen'" :itemWidth="'w-screen'"
+  <Carousel :compo="'CarouselItem'" :apiData="trendingData"
     :height="'h-screen'" />
   <div class="w-[80vw] m-auto mt-16">
     <h1 class="text-3xl font-bold text-primary">Popular Movies</h1>

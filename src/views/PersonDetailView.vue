@@ -45,31 +45,44 @@ export default {
 </script>
 
 <template>
-  <div class="w-[80vw] m-auto pt-32">
-    <div class="flex">
-      <div class="min-w-[20%]">
+  <div class="w-[90vw] lg:w-[80vw] m-auto xl:pt-32">
+    <div class="flex flex-col items-center lg:items-start lg:flex-row">
+      <div class="flex flex-col items-center lg:items-start w-[90vw] lg:min-w-[20%]">
         <img class="w-[200px] rounded-md" :src="imageUrl + personData.profile_path" alt="">
-        <h2 class="font-bold text-xl mt-8">Personal Info</h2>
+        <h1 class="lg:hidden font-bold text-3xl mt-4">{{ personData.name }}</h1>
+        <h2 class="text-xl mt-8 self-start">Personal Info</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:flex lg:flex-col self-start">
+          <div class="pr-4">
+            <h3 class="mt-4">Known For</h3>
+            <p class="text-gray-400">{{ personData.known_for_department }}</p>
+          </div>
 
-        <h3 class="mt-4">Known For</h3>
-        <p class="text-gray-400">{{ personData.known_for_department }}</p>
+          <div class="pr-4">
+            <h3 class="mt-4">Gender</h3>
+            <p class="text-gray-400">{{ personData.gender === 1 ? 'Female' : 'Male' }}</p>
+          </div>
 
-        <h3 class="mt-4">Gender</h3>
-        <p class="text-gray-400">{{ personData.gender === 1 ? 'Female' : 'Male' }}</p>
+          <div class="pr-4">
+            <h3 class="mt-4">Birthday</h3>
+            <p class="text-gray-400">{{ changeDateFormat() }}</p>
+          </div>
 
-        <h3 class="mt-4">Birthday</h3>
-        <p class="text-gray-400">{{ changeDateFormat() }}</p>
-
-        <h3 class="mt-4">Place of Birth</h3>
-        <p class="text-gray-400">{{ personData.place_of_birth }}</p>
+          <div class="pr-4">
+            <h3 class="mt-4">Place of Birth</h3>
+            <p class="text-gray-400">{{ personData.place_of_birth }}</p>
+          </div>
+        </div>
       </div>
-      <div class="min-w-[80%] ml-8">
-        <h1 class="font-bold text-3xl">{{ personData.name }}</h1>
-        <p class="biography mt-8">{{ personData.biography }}</p>
+      <div class="min-w-[80%] lg:ml-8">
+        <h1 class="hidden lg:block font-bold text-3xl">{{ personData.name }}</h1>
+        <h1 class="lg:hidden text-xl mt-8">Biography</h1>
+        <p class="biography font-[100] mt-2 lg:mt-8">{{ personData.biography }}</p>
         <h2 class="font-bold text-xl mt-8">Known For</h2>
-        <Slider :api-data="combinedCreditsData.cast"
-          :media-type="getMediaType()" :compo="'CardItem'" :margin="'mr-12'" />
+        <Slider class="hidden lg:flex" :api-data="combinedCreditsData.cast" :media-type="getMediaType()"
+          :compo="'CardItem'" :margin="'mr-12'" />
       </div>
+      <Slider class="lg:hidden" :api-data="combinedCreditsData.cast" :media-type="getMediaType()"
+        :compo="'CardItem'" :margin="'mr-12'" />
     </div>
   </div>
 </template>
