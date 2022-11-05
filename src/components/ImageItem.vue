@@ -7,6 +7,7 @@ export default {
     apiData: Object,
     styling: String,
     upcoming: Boolean,
+    width: String,
   },
   data() {
     return {
@@ -22,8 +23,10 @@ export default {
 </script>
 
 <template>
-  <div ref="card" class="card mr-2" :style="{ transform: styling }">
-    <img class="min-w-[300px] rounded-xl cursor-pointer" @click="$emit('image-selected', imageUrl + apiData[index].file_path)" :src="imageUrl + apiData[index].file_path" alt="">
+  <div ref="card" class="card m-2" :style="{ transform: styling }">
+    <img :class="width" class="min-w-[150px] md:min-w-[200px] lg:min-w-[250px] rounded-xl cursor-pointer"
+      @click="$emit('image-selected', imageUrl + apiData[index].file_path)" :src="imageUrl + apiData[index].file_path"
+      alt="">
   </div>
 </template>
 

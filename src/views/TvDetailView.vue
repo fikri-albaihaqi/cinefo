@@ -1,13 +1,13 @@
 <script>
 import { getTvDetail, getTvCredits, getTvImages, getTvVideos } from "../api/index.js";
 import Button from '../components/Button.vue';
-import Slider from '../components/Slider.vue';
+import ImageItem from "../components/ImageItem.vue";
 
 export default {
   name: 'TvDetailView',
   components: {
     Button,
-    Slider,
+    ImageItem,
   },
   data() {
     return {
@@ -77,7 +77,8 @@ export default {
     </div>
   </div>
   <div class="fixed w-screen h-screen z-50" :class="imageVisibility" :style="{ backgroundColor: 'rgba(0,0,0,0.8)' }">
-    <span class="absolute material-symbols-outlined text-5xl right-10 top-4 cursor-pointer" @click="imageVisibility = 'hidden'">
+    <span class="absolute material-symbols-outlined text-5xl right-10 top-4 cursor-pointer"
+      @click="imageVisibility = 'hidden'">
       close
     </span>
     <div class="w-[80vw] h-full m-auto flex items-center">
@@ -135,6 +136,9 @@ export default {
   </div>
   <div class="w-[80vw] m-auto mt-16">
     <h1 class="text-2xl font-bold">Backdrops</h1>
-    <Slider :compo="'ImageItem'" @selected="showImage" :api-data="imagesData" :width="'w-[80vw]'" :media-type="'image'" />
+    <div class="flex flex-wrap justify-center">
+      <ImageItem @image-selected="showImage" :api-data="imagesData" v-for="(item, index) in imagesData"
+        :key="`item-${index}`" :index="index" :width="'w-[290px]'" />
+    </div>
   </div>
 </template>

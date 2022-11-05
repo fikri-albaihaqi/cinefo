@@ -1,13 +1,13 @@
 <script>
 import { getMovieDetail, getMovieCredits, getMovieImages, getMovieVideos } from "../api/index.js";
 import Button from '../components/Button.vue';
-import Slider from '../components/Slider.vue';
+import ImageItem from '../components/ImageItem.vue';
 
 export default {
   name: 'MovieDetailView',
   components: {
     Button,
-    Slider,
+    ImageItem,
   },
   data() {
     return {
@@ -79,8 +79,10 @@ export default {
     backgroundColor: '#1B1A17',
     maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0))',
   }"></div>
-  <div class="fixed top-0 w-screen h-screen z-50" :class="videoVisibility" :style="{ backgroundColor: 'rgba(0,0,0,0.8)' }">
-    <span class="absolute material-symbols-outlined text-3xl md:text-5xl right-10 top-4 cursor-pointer" @click="stopVideo()">
+  <div class="fixed top-0 w-screen h-screen z-50" :class="videoVisibility"
+    :style="{ backgroundColor: 'rgba(0,0,0,0.8)' }">
+    <span class="absolute material-symbols-outlined text-3xl md:text-5xl right-10 top-4 cursor-pointer"
+      @click="stopVideo()">
       close
     </span>
     <div class="relative top-32 lg:top-0 w-[95vw] lg:w-[80vw] h-1/2 lg:h-full m-auto flex justify-center items-center">
@@ -88,15 +90,17 @@ export default {
       </iframe>
     </div>
   </div>
-  <div class="fixed top-0 w-screen h-screen z-50" :class="imageVisibility" :style="{ backgroundColor: 'rgba(0,0,0,0.8)' }">
-    <span class="absolute material-symbols-outlined text-3xl md:text-5xl right-10 top-4 cursor-pointer" @click="imageVisibility = 'hidden'">
+  <div class="fixed top-0 w-screen h-screen z-50" :class="imageVisibility"
+    :style="{ backgroundColor: 'rgba(0,0,0,0.8)' }">
+    <span class="absolute material-symbols-outlined text-3xl md:text-5xl right-10 top-4 cursor-pointer"
+      @click="imageVisibility = 'hidden'">
       close
     </span>
     <div class="w-[80vw] h-full m-auto flex items-center">
       <img :src="selectedImage" alt="">
     </div>
   </div>
-  <div class="flex flex-col w-[80vw] m-auto -z-10">
+  <div class="flex flex-col w-[90vw] md:w-[80vw] m-auto -z-10">
     <div class="md:flex">
       <div class="pt-16 md:pt-40 xl:pt-[40vh] md:w-[75%]">
         <h1 class="text-3xl font-bold">{{ movieData.title }}</h1>
@@ -138,9 +142,12 @@ export default {
         </div>
       </div>
     </div>
-    <div class="w-[80vw] m-auto mt-16">
+    <div class="w-[90vw] md:w-[80vw] m-auto mt-16">
       <h1 class="text-2xl font-bold">Backdrops</h1>
-      <Slider :compo="'ImageItem'" @selected="showImage" :api-data="imagesData" :width="'w-[80vw]'" :media-type="'image'" />
+      <div class="grid grid-cols-2 md:grid-cols-3 justify-item-center mt-4 lg:mt-8">
+        <ImageItem @image-selected="showImage" :api-data="imagesData" v-for="(item, index) in imagesData" :key="`item-${index}`"
+          :index="index" />
+      </div>
     </div>
   </div>
 </template>

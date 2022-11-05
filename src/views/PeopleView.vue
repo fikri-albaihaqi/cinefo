@@ -24,9 +24,9 @@ export default {
 </script>
 
 <template>
-  <div class="w-[80vw] m-auto pt-32">
-    <h1 class="font-bold text-2xl ml-12">Popular</h1>
-    <div class="flex flex-wrap justify-center mt-8">
+  <div class="w-[90vw] md:w-[80vw] m-auto lg:pt-32">
+    <h1 class="font-bold text-2xl">Popular</h1>
+    <div class="grid grid-cols-3 md:grid-cols-5 justify-item-center mt-4 lg:mt-8">
       <CardItem :api-data="peopleData" v-for="(item, index) in peopleData" :key="`item-${index}`"
         :index="index" :media-type="'person'" :margin="'mx-4 my-8'" :hide="'hidden'" />
     </div>

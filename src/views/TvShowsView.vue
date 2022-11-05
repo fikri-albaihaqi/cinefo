@@ -41,13 +41,13 @@ export default {
 </script>
 
 <template>
-  <div class="w-[80vw] m-auto pt-32">
-    <h1 class="font-bold text-2xl ml-12" v-if="type === 'popular'">Popular</h1>
-    <h1 class="font-bold text-2xl ml-12" v-else-if="type === 'top rated'">Top Rated</h1>
+  <div class="w-[90vw] md:w-[80vw] m-auto lg:pt-32">
+    <h1 class="font-bold text-2xl" v-if="type === 'popular'">Popular</h1>
+    <h1 class="font-bold text-2xl" v-else-if="type === 'top rated'">Top Rated</h1>
 
-    <div class="flex flex-wrap justify-center mt-8">
+    <div class="grid grid-cols-3 md:grid-cols-5 justify-item-center mt-4 lg:mt-8">
       <CardItem :api-data="tvData" :upcoming="upcoming" v-for="(item, index) in tvData" :key="`item-${index}`"
-        :index="index" :media-type="'tv'" :margin="'mx-4 my-2'" />
+        :index="index" :media-type="'tv'" />
     </div>
   </div>
 </template>
