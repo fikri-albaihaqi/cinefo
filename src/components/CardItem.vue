@@ -24,6 +24,13 @@ export default {
   methods: {
     changeDateFormat() {
       const newDate = new Date(this.apiData[this.index].release_date);
+      console.log(newDate);
+      // if (newDate == 'Invalid Date') {
+      //   return '-';  
+      // }
+      if (this.mediaType === 'tv') {
+        return this.apiData[this.index].first_air_date.slice(0, 4)
+      }
       return `${newDate.getDate()} ${this.monthNames[newDate.getMonth()]}, ${newDate.getFullYear()}`;
     },
     getRouteName() {
@@ -64,7 +71,7 @@ export default {
 
 <template>
   <div ref="card" class="card w-[100px] md:w-[110px] lg:w-[150px] xl:w-[200px] my-2" :class="margin" :style="{ transform: styling }">
-    <router-link :to="{ name: getRouteName(), params: { id: apiData[index].id } }">
+    <router-link :to="{ name: getRouteName(), params: { id: apiData[index]?.id } }">
       <img class="min-w-[100px] md:min-w-[110px] lg:min-w-[150px] xl:min-w-[200px] xl:h-[300px] rounded-lg"
         :src="mediaType === 'person' ? getProfilePath() : getPosterPath()"
         alt="">

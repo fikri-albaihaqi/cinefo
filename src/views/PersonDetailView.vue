@@ -80,7 +80,7 @@ export default {
         <p class="biography font-[100] mt-2 lg:mt-8">{{ personData.biography }}</p>
         <h2 class="font-bold text-xl mt-8">Known For</h2>
         <div class="grid grid-cols-3 md:grid-cols-4 justify-item-center mt-4 lg:mt-8">
-          <CardItem :api-data="combinedCreditsData.cast" v-for="(item, index) in combinedCreditsData.cast" :key="`item-${index}`"
+          <CardItem :api-data="combinedCreditsData.cast" :upcoming="true" v-for="(item, index) in combinedCreditsData.cast" :key="`item-${index}`"
             :index="index" :media-type="mediaType[index]" />
         </div>
       </div>
