@@ -1,11 +1,11 @@
 <script>
 import { getPersonDetail, getPersonCombinedCredits } from '../api/index.js';
-import Slider from '../components/Slider.vue';
+import CardItem from '../components/CardItem.vue';
 
 export default {
   name: 'PersonDetailView',
   components: {
-    Slider,
+    CardItem,
   },
   data() {
     return {
@@ -31,7 +31,7 @@ export default {
       return `${newDate.getDate()} ${this.monthNames[newDate.getMonth()]}, ${newDate.getFullYear()}`;
     },
     getMediaType() {
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i <= this.combinedCreditsData.cast.length; i++) {
         this.mediaType[i] = this.combinedCreditsData.cast[i].media_type;
       }
       return this.mediaType;
@@ -40,6 +40,7 @@ export default {
   async created() {
     this.personData = await this.getPersonData(this.id);
     this.combinedCreditsData = await this.getPersonCombinedCreditsData(this.id);
+    this.getMediaType();
   }
 }
 </script>
@@ -78,11 +79,11 @@ export default {
         <h1 class="lg:hidden text-xl mt-8">Biography</h1>
         <p class="biography font-[100] mt-2 lg:mt-8">{{ personData.biography }}</p>
         <h2 class="font-bold text-xl mt-8">Known For</h2>
-        <Slider class="hidden lg:flex" :api-data="combinedCreditsData.cast" :media-type="getMediaType()"
-          :compo="'CardItem'" :margin="'mr-12'" />
+        <div class="grid grid-cols-3 md:grid-cols-4 justify-item-center mt-4 lg:mt-8">
+          <CardItem :api-data="combinedCreditsData.cast" :upcoming="true" v-for="(item, index) in combinedCreditsData.cast" :key="`item-${index}`"
+            :index="index" :media-type="mediaType[index]" />
+        </div>
       </div>
-      <Slider class="lg:hidden" :api-data="combinedCreditsData.cast" :media-type="getMediaType()"
-        :compo="'CardItem'" :margin="'mr-12'" />
     </div>
   </div>
 </template>

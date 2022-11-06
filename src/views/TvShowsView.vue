@@ -11,6 +11,7 @@ export default {
     return {
       tvData: Object,
       type: '',
+      page: 2,
     }
   },
   methods: {
@@ -19,16 +20,30 @@ export default {
     },
     async getTopRatedTvShowsData() {
       return (await getTopRatedTvShows()).data.results;
+    },
+    async loadMoreTvShows() {
+      let newData;
+      if (this.type === 'popular') {
+        newData = (await getPopularTvShows(this.page)).data.results;
+      } else if (this.type === 'top rated') {
+        newData = (await getTopRatedTvShows(this.page)).data.results;
+      }
+      for (let i = 0; i <= newData.length; i++) {
+        this.tvData.push(newData[i]);
+      }
+      this.page++;
     }
   },
   watch: {
     '$route.params.type': {
       async handler(newValue) {
         if (newValue === 'popular') {
+          this.page = 2;
           this.tvData = [];
           this.type = newValue;
           this.tvData = await this.getPopularTvShowsData();
         } else if (newValue === 'top rated') {
+          this.page = 2;
           this.tvData = [];
           this.type = newValue;
           this.tvData = await this.getTopRatedTvShowsData();
@@ -41,13 +56,15 @@ export default {
 </script>
 
 <template>
-  <div class="w-[80vw] m-auto pt-32">
-    <h1 class="font-bold text-2xl ml-12" v-if="type === 'popular'">Popular</h1>
-    <h1 class="font-bold text-2xl ml-12" v-else-if="type === 'top rated'">Top Rated</h1>
+  <div class="w-[90vw] md:w-[80vw] m-auto lg:pt-32">
+    <h1 class="font-bold text-2xl" v-if="type === 'popular'">Popular</h1>
+    <h1 class="font-bold text-2xl" v-else-if="type === 'top rated'">Top Rated</h1>
 
-    <div class="flex flex-wrap justify-center mt-8">
+    <div class="grid grid-cols-3 md:grid-cols-5 justify-item-center mt-4 lg:mt-8">
       <CardItem :api-data="tvData" :upcoming="upcoming" v-for="(item, index) in tvData" :key="`item-${index}`"
-        :index="index" :media-type="'tv'" :margin="'mx-4 my-2'" />
+        :index="index" :media-type="'tv'" />
     </div>
+    <button @click="loadMoreTvShows()" class="w-full p-4 mt-8 rounded-lg bg-primary hover:bg-orange-700">Load
+      More</button>
   </div>
 </template>

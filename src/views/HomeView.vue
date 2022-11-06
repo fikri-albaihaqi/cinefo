@@ -1,12 +1,13 @@
 <script>
 import { getTrending, getPopularMovies, getPopularTvShows, getUpcomingMovies } from "../api/index.js";
 import Carousel from "../components/Carousel.vue";
-import Slider from '../components/Slider.vue';
+import CardItem from "../components/CardItem.vue";
+
 export default {
   name: 'HomeView',
   components: {
     Carousel,
-    Slider,
+    CardItem,
   },
   data() {
     return {
@@ -53,18 +54,25 @@ export default {
 </script>
 
 <template>
-  <Carousel :compo="'CarouselItem'" :apiData="trendingData"
-    :height="'h-screen'" />
-  <div class="w-[80vw] m-auto mt-16">
+  <Carousel :compo="'CarouselItem'" :apiData="trendingData" :height="'h-screen'" />
+  <div class="w-[90vw] md:w-[80vw] m-auto mt-16">
     <h1 class="text-3xl font-bold text-primary">Popular Movies</h1>
-    <Slider :compo="'CardItem'" :apiData="popularMoviesData" :media-type="getMediaType('movie')"
-      :margin="'mr-[3.58rem]'" />
+    <div class="grid grid-cols-3 md:grid-cols-5 justify-items-center mt-8">
+      <CardItem :api-data="popularMoviesData" v-for="(item, index) in popularMoviesData" :key="`item-${index}`"
+        :index="index" :media-type="'movie'" />
+    </div>
 
     <h1 class="text-3xl font-bold text-primary mt-16">Upcoming Movies</h1>
-    <Slider :compo="'CardItem'" :apiData="upcomingMoviesData" :upcoming="true" :media-type="getMediaType('movie')"
-      :margin="'mr-[3.58rem]'" />
+    <div class="grid grid-cols-3 md:grid-cols-5 justify-items-center mt-8">
+      <CardItem :api-data="upcomingMoviesData" :upcoming="true" v-for="(item, index) in upcomingMoviesData"
+        :key="`item-${index}`" :index="index" :media-type="'movie'" />
+    </div>
 
     <h1 class="text-3xl font-bold text-primary mt-16">Popular TV Shows</h1>
-    <Slider :compo="'CardItem'" :apiData="popularTvShowsData" :media-type="getMediaType('tv')" :margin="'mr-[3.58rem]'" />
+    <div class="grid grid-cols-3 md:grid-cols-5 justify-items-center mt-8">
+      <CardItem :api-data="popularTvShowsData" v-for="(item, index) in popularTvShowsData" :key="`item-${index}`"
+        :index="index" :media-type="'tv'" />
+    </div>
+
   </div>
 </template>

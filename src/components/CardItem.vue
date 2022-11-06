@@ -24,6 +24,13 @@ export default {
   methods: {
     changeDateFormat() {
       const newDate = new Date(this.apiData[this.index].release_date);
+      console.log(newDate);
+      // if (newDate == 'Invalid Date') {
+      //   return '-';  
+      // }
+      if (this.mediaType === 'tv') {
+        return this.apiData[this.index].first_air_date.slice(0, 4)
+      }
       return `${newDate.getDate()} ${this.monthNames[newDate.getMonth()]}, ${newDate.getFullYear()}`;
     },
     getRouteName() {
@@ -63,13 +70,13 @@ export default {
 </script>
 
 <template>
-  <div ref="card" class="card w-[200px]" :class="margin" :style="{ transform: styling }">
-    <router-link :to="{ name: getRouteName(), params: { id: apiData[index].id } }">
-      <img class="min-w-[200px] h-[300px] rounded-lg"
+  <div ref="card" class="card w-[100px] md:w-[110px] lg:w-[150px] xl:w-[200px] my-2" :class="margin" :style="{ transform: styling }">
+    <router-link :to="{ name: getRouteName(), params: { id: apiData[index]?.id } }">
+      <img class="min-w-[100px] md:min-w-[110px] lg:min-w-[150px] xl:min-w-[200px] xl:h-[300px] rounded-lg"
         :src="mediaType === 'person' ? getProfilePath() : getPosterPath()"
         alt="">
-      <div class="mt-2">
-        <h1 class="">{{ apiData[index].title ||
+      <div class=" mt-2">
+        <h1 class="truncate">{{ apiData[index].title ||
             apiData[index].name
         }}</h1>
         <h3 class="text-sm text-gray-400 mb-4" :class="hide">{{ upcoming ? changeDateFormat() :
