@@ -18,16 +18,13 @@ export default {
       monthNames: ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
       ],
-      score: ''
+      score: '',
+      hasImage: true,
     }
   },
   methods: {
     changeDateFormat() {
       const newDate = new Date(this.apiData[this.index].release_date);
-      console.log(newDate);
-      // if (newDate == 'Invalid Date') {
-      //   return '-';  
-      // }
       if (this.mediaType === 'tv') {
         return this.apiData[this.index].first_air_date.slice(0, 4)
       }
@@ -45,7 +42,7 @@ export default {
     getPosterPath() {
       if (this.mediaType === 'movie' || 'tv') {
         if (this.apiData[this.index].poster_path === null) {
-          return '../src/assets/blank-image.png';
+          return this.hasImage = false;
         }
         return this.imageUrl + this.apiData[this.index].poster_path;
       }
@@ -53,7 +50,7 @@ export default {
     getProfilePath() {
       if (this.mediaType === 'person') {
         if (this.apiData[this.index].profile_path === null) {
-          return '../src/assets/blank-image.png';
+          return this.hasImage = false;
         }
         return this.imageUrl + this.apiData[this.index].profile_path;
       }
@@ -72,9 +69,10 @@ export default {
 <template>
   <div ref="card" class="card w-[100px] md:w-[110px] lg:w-[150px] xl:w-[200px] my-2" :class="margin" :style="{ transform: styling }">
     <router-link :to="{ name: getRouteName(), params: { id: apiData[index]?.id } }">
-      <img class="min-w-[100px] md:min-w-[110px] lg:min-w-[150px] xl:min-w-[200px] xl:h-[300px] rounded-lg"
+      <img v-if="hasImage" class="min-w-[100px] md:min-w-[110px] lg:min-w-[150px] xl:min-w-[200px] xl:h-[300px] rounded-lg"
         :src="mediaType === 'person' ? getProfilePath() : getPosterPath()"
         alt="">
+      <div v-if="!hasImage" class="bg-gray-300 min-w-[100px] md:min-w-[110px] lg:min-w-[150px] xl:min-w-[200px] h-[150px] md:h-[165px] lg:h-[225px] xl:h-[300px] rounded-lg"></div>
       <div class=" mt-2">
         <h1 class="truncate">{{ apiData[index].title ||
             apiData[index].name
