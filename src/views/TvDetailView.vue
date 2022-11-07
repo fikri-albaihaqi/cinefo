@@ -20,6 +20,7 @@ export default {
       imageVisibility: 'hidden',
       trailerData: Object,
       youtubeUrl: 'https://www.youtube.com/embed/',
+      hasTrailer: true,
     }
   },
   methods: {
@@ -35,6 +36,9 @@ export default {
     async getTrailerData(id) {
       const videos = (await getTvVideos(id)).data.results;
       const trailer = videos.filter(video => (video.name.includes('Trailer')) && (video.type === 'Trailer'));
+      if (trailer.length == 0) {
+        this.hasTrailer = false;
+      }
       return trailer[0];
     },
     stopVideo() {
@@ -67,7 +71,7 @@ export default {
     backgroundColor: '#1B1A17',
     maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0))',
   }"></div>
-  <div class="fixed w-screen h-screen z-50" :class="videoVisibility" :style="{ backgroundColor: 'rgba(0,0,0,0.8)' }">
+  <div v-if="hasTrailer" class="fixed w-screen h-screen z-50" :class="videoVisibility" :style="{ backgroundColor: 'rgba(0,0,0,0.8)' }">
     <span class="absolute material-symbols-outlined text-5xl right-10 top-4 cursor-pointer" @click="stopVideo()">
       close
     </span>
@@ -99,7 +103,7 @@ export default {
 }} Score</h3>
 
       <p class="mt-4">{{ tvData.overview }}</p>
-      <Button :text="'Watch Trailer'" @click="videoVisibility = ''"
+      <Button v-if="hasTrailer" :text="'Watch Trailer'" @click="videoVisibility = ''"
         :class="['bg-primary', 'py-3', 'px-8', 'rounded-full', 'mt-8']" />
       <div class="flex">
         <div class="mr-16" v-for="creator in tvData.created_by">
@@ -118,12 +122,13 @@ export default {
       <div>
         <router-link :to="{ name: 'person-detail', params: { id: creditsData.cast[i].id } }"
           class="flex items-center my-4" v-for="(n, i) in 4">
-          <div class="w-[80px] h-[80px] rounded-full" :style="{
-            backgroundImage: creditsData.cast[i].profile_path !== null ? 'url(' + imageUrl + creditsData.cast[i].profile_path + ')' : 'url(../src/assets/avatar.png)',
+          <div v-if="creditsData.cast[i].profile_path != null" class="w-[80px] h-[80px] rounded-full" :style="{
+            backgroundImage: 'url(' + imageUrl + creditsData.cast[i].profile_path + ')',
             backgroundSize: 'cover',
             backgroundPosition: '0px 35%'
           }">
           </div>
+          <div v-if="creditsData.cast[i].profile_path == null" class="bg-gray-300 w-[80px] h-[80px] rounded-full"></div>
           <div class="ml-4">
             <h3 class="font-bold">{{ creditsData.cast[i].name }}</h3>
             <h3>as {{ creditsData.cast[i].character }}</h3>
