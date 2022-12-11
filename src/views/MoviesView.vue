@@ -67,13 +67,13 @@ export default {
 
 <template>
   <div class="w-[90vw] md:w-[80vw] m-auto lg:pt-32">
-    <h1 class="font-bold text-2xl" v-if="type === 'popular'">Popular</h1>
-    <h1 class="font-bold text-2xl" v-else-if="type === 'upcoming'">Upcoming</h1>
-    <h1 class="font-bold text-2xl" v-else-if="type === 'top rated'">Top Rated</h1>
+    <h1 class="font-bold text-2xl" v-if="type === 'popular'" data-aos="fade-up" data-aos-delay="300">Popular</h1>
+    <h1 class="font-bold text-2xl" v-else-if="type === 'upcoming'" data-aos="fade-up" data-aos-delay="300">Upcoming</h1>
+    <h1 class="font-bold text-2xl" v-else-if="type === 'top rated'" data-aos="fade-up" data-aos-delay="300">Top Rated</h1>
 
-    <div class="grid grid-cols-3 md:grid-cols-5 justify-items-center mt-4 lg:mt-8">
+    <div class="grid gap-4 grid-cols-3 md:grid-cols-5 mt-4 lg:mt-8">
       <CardItem :api-data="movieData" :upcoming="upcoming" v-for="(item, index) in movieData" :key="`item-${index}`"
-        :index="index" :media-type="'movie'" />
+        :index="index" :media-type="'movie'" data-aos="fade-up" data-aos-delay="300" />
     </div>
     <button @click="loadMoreMovies()" class="w-full p-4 mt-8 rounded-lg bg-primary hover:bg-orange-700">Load
       More</button>

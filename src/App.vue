@@ -1,14 +1,18 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 import Navbar from './components/Navbar.vue';
 import Footer from './components/Footer.vue';
+
+AOS.init({ once: true });
 </script>
 
 <template>
-  <!-- <div class="flex flex-col min-h-screen relative -z-50"> -->
-    <Navbar />
+  <Navbar />
+  <div id="container" class="min-h-screen">
     <RouterView />
-    <Footer />
-  <!-- </div> -->
+  </div>
+  <Footer />
 </template>
 

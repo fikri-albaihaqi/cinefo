@@ -8,7 +8,6 @@ export default {
     styling: String,
     upcoming: Boolean,
     mediaType: String,
-    margin: String,
     hide: String,
   },
   data() {
@@ -67,13 +66,13 @@ export default {
 </script>
 
 <template>
-  <div ref="card" class="card w-[100px] md:w-[110px] lg:w-[150px] xl:w-[200px] my-2" :class="margin" :style="{ transform: styling }">
+  <div ref="card" class="card w-[100px] md:w-[110px] lg:w-[150px] xl:w-[200px] my-2" :style="{ transform: styling }">
     <router-link :to="{ name: getRouteName(), params: { id: apiData[index]?.id } }">
       <img v-if="hasImage" class="min-w-[100px] md:min-w-[110px] lg:min-w-[150px] xl:min-w-[200px] xl:h-[300px] rounded-lg"
         :src="mediaType === 'person' ? getProfilePath() : getPosterPath()"
         alt="">
       <div v-if="!hasImage" class="bg-gray-300 min-w-[100px] md:min-w-[110px] lg:min-w-[150px] xl:min-w-[200px] h-[150px] md:h-[165px] lg:h-[225px] xl:h-[300px] rounded-lg"></div>
-      <div class=" mt-2">
+      <div class="mt-2">
         <h1 class="truncate">{{ apiData[index].title ||
             apiData[index].name
         }}</h1>

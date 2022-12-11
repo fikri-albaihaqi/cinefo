@@ -31,10 +31,10 @@ export default {
 
 <template>
   <div class="w-[90vw] md:w-[80vw] m-auto lg:pt-32">
-    <h1 class="font-bold text-2xl">Search Result(s)</h1>
-    <div class="grid grid-cols-3 md:grid-cols-5 justify-items-center mt-4 lg:mt-8">
+    <h1 class="font-bold text-2xl" data-aos="fade-up" data-aos-delay="300">Search Result(s)</h1>
+    <div class="grid gap-4 grid-cols-3 md:grid-cols-5 mt-4 lg:mt-8">
       <CardItem :api-data="searchResults" v-for="(item, index) in searchResults" :key="`item-${index}`" :index="index"
-        :margin="'mx-4 my-8'" :hide="'hidden'" :media-type="searchResults[index].media_type" />
+        :margin="'mx-4 my-8'" :hide="'hidden'" :media-type="searchResults[index].media_type" data-aos="fade-up" data-aos-delay="300" />
     </div>
   </div>
 </template>

@@ -33,10 +33,10 @@ export default {
 
 <template>
   <div class="w-[90vw] md:w-[80vw] m-auto lg:pt-32">
-    <h1 class="font-bold text-2xl">Popular</h1>
+    <h1 class="font-bold text-2xl" data-aos="fade-up" data-aos-delay="300">Popular</h1>
     <div class="grid grid-cols-3 md:grid-cols-5 justify-item-center mt-4 lg:mt-8">
       <CardItem :api-data="peopleData" v-for="(item, index) in peopleData" :key="`item-${index}`" :index="index"
-        :media-type="'person'" :margin="'mx-4 my-8'" :hide="'hidden'" />
+        :media-type="'person'" :margin="'mx-4 my-8'" :hide="'hidden'" data-aos="fade-up" data-aos-delay="300" />
     </div>
     <button @click="loadMorePeople()" class="w-full p-4 mt-8 rounded-lg bg-primary hover:bg-orange-700">Load
       More</button>

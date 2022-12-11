@@ -20,11 +20,12 @@ export default {
 
 <template>
   <!-- Big screen nav -->
-  <nav class="hidden lg:block m-auto w-[80vw]">
-    <div class="flex justify-between absolute w-[80%] items-center text-white p-8">
-      <router-link to="/" class="font-lexend-exa font-bold text-2xl"><span class="text-primary">C</span>inefo
+  <nav class="hidden relative z-20 lg:block m-auto">
+    <div class="flex justify-between absolute w-screen items-center text-white py-8 lg:px-32 xl:px-36">
+      <router-link to="/" class="font-lexend-exa font-bold text-2xl" data-aos="fade-down" data-aos-delay="300"><span
+          class="text-primary">C</span>inefo
       </router-link>
-      <input v-model="queryData" @keyup.enter="search(queryData)" class="
+      <input v-model="queryData" @keyup.enter="search(queryData)" data-aos="fade-down" data-aos-delay="600" class="
             mx-2
             p-2
             rounded-lg
@@ -34,10 +35,10 @@ export default {
             w-[60vh]
           " type="text" placeholder="Search movies, TV shows, actors, more..." />
       <div class="flex">
-        <li class="p-4 inline-block hover:cursor-pointer hover:text-primary">
+        <li class="p-4 inline-block hover:cursor-pointer hover:text-primary" data-aos="fade-down" data-aos-delay="700">
           Movies
           <div class="dropdown absolute bg-primary w-[160px] mt-2 rounded-lg text-white">
-            <router-link :to="{ name: 'movies', params: { type: 'popular' } }"
+            <router-link :to="{ name: 'movies', params: { type: 'popular' } }" 
               class="block text-left p-2 hover:bg-white hover:text-primary hover:rounded-t-lg">Popular</router-link>
             <router-link :to="{ name: 'movies', params: { type: 'upcoming' } }"
               class="block text-left p-2 hover:bg-white hover:text-primary">Upcoming</router-link>
@@ -45,7 +46,7 @@ export default {
               class="block text-left p-2 hover:bg-white hover:text-primary hover:rounded-b-lg">Top Rated</router-link>
           </div>
         </li>
-        <li class="p-4 inline-block hover:cursor-pointer hover:text-primary whitespace-nowrap">
+        <li class="p-4 inline-block hover:cursor-pointer hover:text-primary whitespace-nowrap" data-aos="fade-down" data-aos-delay="800">
           TV Shows
           <div class="dropdown absolute bg-primary w-[160px] mt-2 rounded-lg text-white">
             <router-link router-link :to="{ name: 'tvs', params: { type: 'popular' } }"
@@ -56,7 +57,7 @@ export default {
             </router-link>
           </div>
         </li>
-        <router-link :to="{ name: 'people' }" class="p-4 hover:text-primary" href="">People</router-link>
+        <router-link :to="{ name: 'people' }" class="p-4 hover:text-primary" href="" data-aos="fade-down" data-aos-delay="900">People</router-link>
       </div>
     </div>
   </nav>
@@ -174,6 +175,7 @@ li:hover .dropdown {
 .slide-fade-enter-active {
   transition: all 0.5s ease-out;
 }
+
 .slide-fade-leave-active {
   transition: all 0.3s ease-out;
 }

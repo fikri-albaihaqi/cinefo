@@ -105,7 +105,7 @@ export default {
     </div>
   </div>
   <div class="flex flex-col w-[90vw] md:w-[80vw] m-auto -z-10">
-    <div class="md:flex">
+    <div class="md:flex" data-aos="fade-up" data-aos-delay="300">
       <div class="pt-16 md:pt-40 xl:pt-[40vh] md:w-[75%]">
         <h1 class="text-3xl font-bold">{{ movieData.title }}</h1>
         <h3>Original title: {{ movieData.original_title }}</h3>
@@ -151,7 +151,7 @@ export default {
       <h1 class="text-2xl font-bold">Backdrops</h1>
       <div class="grid grid-cols-2 md:grid-cols-3 justify-item-center mt-4 lg:mt-8">
         <ImageItem @image-selected="showImage" :api-data="imagesData" v-for="(item, index) in imagesData" :key="`item-${index}`"
-          :index="index" />
+          :index="index" data-aos="fade-up" />
       </div>
     </div>
   </div>

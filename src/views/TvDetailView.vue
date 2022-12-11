@@ -89,7 +89,7 @@ export default {
       <img :src="selectedImage" alt="">
     </div>
   </div>
-  <div class="flex w-[80vw] m-auto -z-10">
+  <div class="flex w-[80vw] m-auto -z-10" data-aos="fade-up" data-aos-delay="300">
     <div class="pt-[40vh] w-[75%]">
       <h1 class="text-3xl font-bold">{{ tvData.name }}</h1>
       <h3>Original title: {{ tvData.original_name }}</h3>
@@ -143,7 +143,7 @@ export default {
     <h1 class="text-2xl font-bold">Backdrops</h1>
     <div class="flex flex-wrap justify-center">
       <ImageItem @image-selected="showImage" :api-data="imagesData" v-for="(item, index) in imagesData"
-        :key="`item-${index}`" :index="index" :width="'w-[290px]'" />
+        :key="`item-${index}`" :index="index" :width="'w-[290px]'" data-aos="fade-up" />
     </div>
   </div>
 </template>
