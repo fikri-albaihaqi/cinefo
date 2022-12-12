@@ -1,5 +1,5 @@
 <script>
-import { getTrending, getPopularMovies, getPopularTvShows, getUpcomingMovies } from "../api/index.js";
+import { getTrending, getMovies, getTvShows } from "../api/index.js";
 import Carousel from "../components/Carousel.vue";
 import CardItem from "../components/CardItem.vue";
 
@@ -21,14 +21,11 @@ export default {
     async getTrendingData() {
       return (await getTrending()).data.results;
     },
-    async getPopularMoviesData() {
-      return (await getPopularMovies()).data.results;
+    async getMoviesData(category) {
+      return (await getMovies(category)).data.results;
     },
-    async getPupolarTvShowsData() {
-      return (await getPopularTvShows()).data.results;
-    },
-    async getUpcomingMoviesData() {
-      return (await getUpcomingMovies()).data.results;
+    async getTvShowsData(category) {
+      return (await getTvShows(category)).data.results;
     },
     getMediaType(data) {
       let mediaType = [];
@@ -46,9 +43,9 @@ export default {
   },
   async created() {
     this.trendingData = await this.getTrendingData();
-    this.popularMoviesData = await this.getPopularMoviesData();
-    this.popularTvShowsData = await this.getPupolarTvShowsData();
-    this.upcomingMoviesData = await this.getUpcomingMoviesData();
+    this.popularMoviesData = await this.getMoviesData('popular');
+    this.upcomingMoviesData = await this.getMoviesData('upcoming');
+    this.popularTvShowsData = await this.getTvShowsData('popular');
   }
 }
 </script>

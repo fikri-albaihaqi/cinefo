@@ -42,7 +42,7 @@ export default {
               class="block text-left p-2 hover:bg-white hover:text-primary hover:rounded-t-lg">Popular</router-link>
             <router-link :to="{ name: 'movies', params: { type: 'upcoming' } }"
               class="block text-left p-2 hover:bg-white hover:text-primary">Upcoming</router-link>
-            <router-link :to="{ name: 'movies', params: { type: 'top rated' } }"
+            <router-link :to="{ name: 'movies', params: { type: 'top_rated' } }"
               class="block text-left p-2 hover:bg-white hover:text-primary hover:rounded-b-lg">Top Rated</router-link>
           </div>
         </li>
@@ -52,7 +52,7 @@ export default {
             <router-link router-link :to="{ name: 'tvs', params: { type: 'popular' } }"
               class="block text-left p-2 hover:bg-white hover:text-primary hover:rounded-t-lg" href="">Popular
             </router-link>
-            <router-link router-link :to="{ name: 'tvs', params: { type: 'top rated' } }"
+            <router-link router-link :to="{ name: 'tvs', params: { type: 'top_rated' } }"
               class="block text-left p-2 hover:bg-white hover:text-primary hover:rounded-b-lg" href="">Top Rated
             </router-link>
           </div>
@@ -106,7 +106,7 @@ export default {
               class="block text-left py-2 hover:text-primary">Popular</router-link>
             <router-link :to="{ name: 'movies', params: { type: 'upcoming' } }"
               class="block text-left py-2 hover:text-primary">Upcoming</router-link>
-            <router-link :to="{ name: 'movies', params: { type: 'top rated' } }"
+            <router-link :to="{ name: 'movies', params: { type: 'top_rated' } }"
               class="block text-left py-2 hover:text-primary">Top Rated</router-link>
           </div>
         </Transition>
@@ -124,7 +124,7 @@ export default {
             <router-link router-link :to="{ name: 'tvs', params: { type: 'popular' } }"
               class="block text-left py-2 hover:text-primary" href="">Popular
             </router-link>
-            <router-link router-link :to="{ name: 'tvs', params: { type: 'top rated' } }"
+            <router-link router-link :to="{ name: 'tvs', params: { type: 'top_rated' } }"
               class="block text-left py-2 hover:text-primary" href="">Top Rated
             </router-link>
           </div>
