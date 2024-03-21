@@ -5,7 +5,7 @@ export default {
 </script>
 
 <template>
-  <footer class="py-[20px] text-center bg-primary mt-16">
+  <footer class="py-[20px] text-center bg-primary">
     <h1>Designed & Built by <a href="https://github.com/fikri-albaihaqi" target="_blank">Fikri Albaihaqi</a></h1>
   </footer>
 </template>
