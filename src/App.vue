@@ -10,7 +10,7 @@ AOS.init({ once: true });
 
 <template>
   <Navbar />
-  <div id="container" class="min-h-screen overflow-y-hidden">
+  <div id="container" class="min-h-screen overflow-hidden">
     <RouterView />
   </div>
   <Footer />
