@@ -14,6 +14,9 @@ module.exports = {
         'lexend': ['Lexend', 'sans-serif'],
         'lexend-exa': ['Lexend Exa', 'sans-serif'],
       },
+      backgroundImage: {
+        'not-found': "url('/bg.jpg')",
+      }
     },
   },
   plugins: [],
