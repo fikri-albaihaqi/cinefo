@@ -66,7 +66,7 @@ export default {
 </script>
 
 <template>
-  <div ref="card" class="card w-[100px] md:w-[110px] lg:w-[150px] xl:w-[200px] my-2" :style="{ transform: styling }">
+  <div ref="card" class="card w-[100px] md:w-[110px] lg:w-[150px] xl:w-[200px] my-2 mx-8" :style="{ transform: styling }">
     <router-link :to="{ name: getRouteName(), params: { id: apiData[index]?.id } }">
       <img v-if="hasImage" class="min-w-[100px] md:min-w-[110px] lg:min-w-[150px] xl:min-w-[200px] xl:h-[300px] rounded-lg"
         :src="mediaType === 'person' ? getProfilePath() : getPosterPath()"
