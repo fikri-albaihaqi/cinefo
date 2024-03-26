@@ -43,9 +43,13 @@ export default {
       return trailer[0];
     },
     getDirector() {
-      const crew = this.creditsData.crew;
-      const director = crew.filter(crew => crew.job === 'Director');
-      return director[0].name;
+      if (this.creditsData.crew.length > 0) {
+        const crew = this.creditsData.crew;
+        const director = crew.filter(crew => crew.job === 'Director');
+
+        return director[0].name;
+      }
+      return ''
     },
     stopVideo() {
       const iframe = this.$refs.video;
@@ -110,8 +114,8 @@ export default {
         <h1 class="text-3xl font-bold">{{ movieData.title }}</h1>
         <h3>Original title: {{ movieData.original_title }}</h3>
 
-        <h3 class="font-bold mt-4">{{ movieData.runtime }} minutes • {{ movieData.release_date.slice(0, 4) }} • {{
-            movieData.vote_average.toFixed(1)
+        <h3 class="font-bold mt-4">{{ movieData.runtime }} minutes • {{ movieData.release_date?.slice(0, 4) }} • {{
+            movieData.vote_average?.toFixed(1)
         }} Score</h3>
 
         <p class="mt-4">{{ movieData.overview }}</p>
@@ -128,8 +132,8 @@ export default {
       <div class="pt-16 md:pt-40 xl:pt-[40vh] md:ml-12">
         <h1 class="text-2xl font-bold">Top Cast</h1>
         <div>
-          <router-link :to="{ name: 'person-detail', params: { id: creditsData.cast[i].id } }"
-            class="flex items-center my-4" v-for="(n, i) in 4">
+          <router-link :to="{ name: 'person-detail', params: { id: creditsData.cast[i]?.id } }"
+            class="flex items-center my-4" v-for="(n, i) in creditsData.cast.length > 4 ? 4 : creditsData.cast.length">
             <div v-if="creditsData.cast[i].profile_path != null" class="w-[80px] h-[80px] rounded-full" :style="{
               backgroundImage: 'url(' + imageUrl + creditsData.cast[i].profile_path + ')',
               backgroundSize: 'cover',
