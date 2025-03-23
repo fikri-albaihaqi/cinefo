@@ -6,6 +6,6 @@ export default {
 
 <template>
   <footer class="py-[20px] text-center bg-primary">
-    <h1>Designed & Built by <a href="https://github.com/fikri-albaihaqi" target="_blank">Fikri Albaihaqi</a></h1>
+    <h1>Designed & Built by <a href="https://github.com/fikri-albaihaqi" target="_blank">Fikri Albaihaqi &copy; 2025</a></h1>
   </footer>
 </template>
